@@ -17,7 +17,7 @@ RasterWindow::~RasterWindow()
 
 void RasterWindow::render(QPainter *painter)
 {
-    painter->drawText(QRectF(0, 0, width(), height()), Qt::AlignCenter, QStringLiteral("QWindow"));
+    painter->drawPoint(10,10);
 }
 
 void RasterWindow::renderLater()
@@ -32,14 +32,13 @@ void RasterWindow::renderNow()
 
     QRect rect(0, 0, width(), height());
     mBackingStore->beginPaint(rect);
-
     QPaintDevice *device = mBackingStore->paintDevice();
     QPainter painter(device);
-
     painter.fillRect(0, 0, width(), height(), QGradient::NightFade);
-    render(&painter);
-    painter.end();
 
+    render(&painter);
+
+    painter.end();
     mBackingStore->endPaint();
     mBackingStore->flush(rect);
 }
@@ -60,6 +59,8 @@ void RasterWindow::resizeEvent(QResizeEvent *e)
 
 void RasterWindow::exposeEvent(QExposeEvent *e)
 {
+    Q_UNUSED(e)
+
     if (isExposed())
         renderNow();
 }
