@@ -14,6 +14,9 @@ public:
 
     void draw_line_formula(QPainter *painter, QPoint start, QPoint end);
     void draw_line_dda(QPainter *painter, QPoint start, QPoint end);
+    void draw_line_midpoint(QPainter *painter, QPoint start, QPoint end);
+    void draw_line_bresenham(QPainter *painter, QPoint start, QPoint end);
+
 };
 
 #endif // RASTERWINDOW_H
