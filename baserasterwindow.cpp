@@ -1,4 +1,4 @@
-#include "baserasterwindow.h"
+﻿#include "baserasterwindow.h"
 #include <QPainter>
 #include <QResizeEvent>
 #include <QBackingStore>
@@ -7,7 +7,7 @@ BaseRasterWindow::BaseRasterWindow(QWindow *parent)
     : QWindow(parent)
     , mBackingStore(new QBackingStore(this))
 {
-    setGeometry(200,150,400,400);
+    setGeometry(100,100,800,800);
 }
 
 BaseRasterWindow::~BaseRasterWindow()

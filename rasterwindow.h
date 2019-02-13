@@ -1,4 +1,4 @@
-#ifndef RASTERWINDOW_H
+﻿#ifndef RASTERWINDOW_H
 #define RASTERWINDOW_H
 
 #include "baserasterwindow.h"
@@ -11,6 +11,9 @@ public:
     ~RasterWindow() override;
 
     void render(QPainter *painter) override;
+
+    void draw_line_formula(QPainter *painter, QPoint start, QPoint end);
+    void draw_line_dda(QPainter *painter, QPoint start, QPoint end);
 };
 
 #endif // RASTERWINDOW_H
