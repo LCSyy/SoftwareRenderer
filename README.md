@@ -58,8 +58,13 @@ draw_line(p0,p1) {
 **总结**
 DDA算法将直线的方程中存在的乘法运算转换为了加法运算，提高了运算效率。
 
-## References
-[wikipedia - DDA algorithm](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm))
-[wikipedia - Breshams line algorithm](https://en.wikipedia.org/wiki/Bresenham's_line_algorithm)
-[tutorialspoint - Computer Graphics Tutorial](https://www.tutorialspoint.com/computer_graphics/index.htm)
+### Bresnham算法
 
+
+
+### References
+
+[wikipedia - DDA algorithm](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm))
+[wikipedia - Bresnhams line algorithm](https://en.wikipedia.org/wiki/Bresenham's_line_algorithm)
+[tutorialspoint - Computer Graphics Tutorial](https://www.tutorialspoint.com/computer_graphics/index.htm)
+[The Bresnham Line-Drawing Algorithm](https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html)
