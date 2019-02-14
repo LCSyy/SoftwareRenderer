@@ -32,8 +32,8 @@ void RasterWindow::render(QPainter *painter)
 
     // auto start1 = std::chrono::steady_clock::now();
 
-    draw_line_dda(painter,QPoint(x0,y0),QPoint(x1,y1));
-
+    // draw_line_dda(painter,QPoint(x0,y0),QPoint(x1,y1));
+    draw_line_bresenham(painter,QPoint(x0,y0),QPoint(x1,y1));
     // auto end1 = std::chrono::steady_clock::now();
     // qDebug() << "dda duration:" << std::chrono::duration_cast<std::chrono::microseconds>(end1 - start1).count() << "us";
 
@@ -45,7 +45,6 @@ void RasterWindow::render(QPainter *painter)
     } else if(y1 < 0) {
         x_grow = true;
     }
-
 }
 
 void RasterWindow::draw_line_formula(QPainter *painter, QPoint start, QPoint end)
@@ -102,5 +101,57 @@ void RasterWindow::draw_line_midpoint(QPainter *painter, QPoint start, QPoint en
 
 void RasterWindow::draw_line_bresenham(QPainter *painter, QPoint start, QPoint end)
 {
+    int dx = end.x() - start.x();
+    int dy = end.y() - start.y();
 
+    auto plotLow = [&painter,&dx,&dy](int x0, int y0, int x1){
+        int yi = 1;
+        if(dy<0) {
+            yi = -1;
+            dy = -dy;
+        }
+        int D = 2 * dy - dx;
+        int y = y0;
+
+        for(int x = x0; x < x1; ++x) {
+            painter->drawPoint(x,y);
+            if(D > 0) {
+                y += yi;
+                D = D - 2 * dx;
+            }
+            D = D + 2 * dy;
+        }
+    };
+
+    auto plotHigh = [&painter,&dx,&dy](int x0, int y0, int y1){
+        int xi = 1;
+        if(dx < 0) {
+            xi = -1;
+            dx = -dx;
+        }
+        int D = 2 * dx - dy;
+        int x = x0;
+        for(int y = y0; y < y1; ++y) {
+            painter->drawPoint(x,y);
+            if(D > 0) {
+                x += xi;
+                D = D - 2 * dy;
+            }
+            D = D + 2 * dx;
+        }
+    };
+
+    if(std::abs(dy) <= std::abs(dx)) {
+        if(dx<=0) {
+            plotLow(end.x(),end.y(),start.x());
+        } else {
+            plotLow(start.x(),start.y(),end.x());
+        }
+    } else {
+        if(dy<=0) {
+            plotHigh(end.x(),end.y(),start.y());
+        } else {
+            plotHigh(start.x(),start.y(),end.y());
+        }
+    }
 }

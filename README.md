@@ -58,9 +58,13 @@ draw_line(p0,p1) {
 **总结**
 DDA算法将直线的方程中存在的乘法运算转换为了加法运算，提高了运算效率。
 
-### Bresnham算法
+### Bresenham算法
 
+主要参考[wikipedia - Bresenham's line algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 
+Bresenham算法的基本思想是：直线上的点绘制到栅格中时，对于x或者y值而言都有两个可选的像素位置。通过比较可选像素离理论点的距离来决定绘制到那个像素。
+
+。。。
 
 ### References
 
