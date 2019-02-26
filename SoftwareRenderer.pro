@@ -54,9 +54,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    rasterwindow.cpp \
-    baserasterwindow.cpp
+    window/rasterwindow.cpp \
+    window/baserasterwindow.cpp \
+    rasterizer/rasterizeengine.cpp
 
 HEADERS += \
-    rasterwindow.h \
-    baserasterwindow.h
+    window/rasterwindow.h \
+    window/baserasterwindow.h \
+    rasterizer/rasterizeengine.h

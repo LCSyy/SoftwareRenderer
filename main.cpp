@@ -1,5 +1,5 @@
-#include <QGuiApplication>
-#include "rasterwindow.h"
+﻿#include <QGuiApplication>
+#include "window/rasterwindow.h"
 
 int main(int argc, char *argv[])
 {
