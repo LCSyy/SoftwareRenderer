@@ -7,6 +7,8 @@
 
 #include <QDebug>
 
+#include "math/vector2.h"
+
 RasterWindow::RasterWindow(QWindow *parent)
     : BaseRasterWindow(parent)
 {
@@ -23,6 +25,10 @@ RasterWindow::~RasterWindow()
 void RasterWindow::render(QPainter *painter)
 {
     _painter = painter;
+
+    Vector2 vec = Vector2::unit();
+    qDebug() << vec.length();
+
     draw_point(10,10,Color{1.0f,0.0f,0.0f,1.0f});
     _painter = nullptr;
 }

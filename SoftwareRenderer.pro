@@ -56,9 +56,11 @@ SOURCES += \
     main.cpp \
     window/rasterwindow.cpp \
     window/baserasterwindow.cpp \
-    rasterizer/rasterizeengine.cpp
+    rasterizer/rasterizeengine.cpp \
+    math/vector2.cpp
 
 HEADERS += \
     window/rasterwindow.h \
     window/baserasterwindow.h \
-    rasterizer/rasterizeengine.h
+    rasterizer/rasterizeengine.h \
+    math/vector2.h
