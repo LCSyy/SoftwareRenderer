@@ -1,5 +1,6 @@
 ﻿#include "rasterwindow.h"
 #include <QImage>
+#include <QPen>
 #include <QPainter>
 #include <QTimer>
 #include <cmath>
@@ -14,7 +15,7 @@ RasterWindow::RasterWindow(QWindow *parent)
 {
      QTimer *timer = new QTimer(this);
      connect(timer,SIGNAL(timeout()),this,SLOT(renderNow()));
-     timer->start(16);
+     timer->start(100);
 }
 
 RasterWindow::~RasterWindow()
@@ -26,10 +27,30 @@ void RasterWindow::render(QPainter *painter)
 {
     _painter = painter;
 
-    Vector2 vec = Vector2::unit();
-    qDebug() << vec.length();
+    // QPen pen(Qt::red);
+    // pen.setWidth(4);
+    // _painter->setPen(pen);
 
-    draw_point(10,10,Color{1.0f,0.0f,0.0f,1.0f});
+    static bool grow = true;
+    static float radius = 0.0f;
+    static Vector2 vec(100.0f,0.0f);
+
+    Vector2 vec_rotate = vec.rotate(radius);
+    vec_rotate += Vector2{200.0f,200.0f};
+    draw_point(static_cast<int>(vec_rotate._x),static_cast<int>(vec_rotate._y), Color{1.0f,0.0f,0.0f,1.0f});
+
+    if(radius > PI*2.0f) {
+        grow = false;
+    } else if(radius < 0.0f) {
+        grow = true;
+    }
+
+    if(grow) {
+        radius += 0.1f;
+    } else {
+        radius -= 0.1f;
+    }
+
     _painter = nullptr;
 }
 
@@ -40,7 +61,6 @@ void RasterWindow::draw_point(int x, int y, const Color &color)
                                           static_cast<double>(color.g),
                                           static_cast<double>(color.b),
                                           static_cast<double>(color.a)));
-
         _painter->drawPoint(x,y);
     }
 }
