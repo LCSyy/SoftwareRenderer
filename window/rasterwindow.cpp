@@ -15,7 +15,7 @@ RasterWindow::RasterWindow(QWindow *parent)
 {
      QTimer *timer = new QTimer(this);
      connect(timer,SIGNAL(timeout()),this,SLOT(renderNow()));
-     timer->start(100);
+     // timer->start(16);
 }
 
 RasterWindow::~RasterWindow()
@@ -27,11 +27,7 @@ void RasterWindow::render(QPainter *painter)
 {
     _painter = painter;
 
-    // QPen pen(Qt::red);
-    // pen.setWidth(4);
-    // _painter->setPen(pen);
-
-    static bool grow = true;
+    // static bool grow = true;
     static float radius = 0.0f;
     static Vector2 vec(100.0f,0.0f);
 
@@ -39,17 +35,23 @@ void RasterWindow::render(QPainter *painter)
     vec_rotate += Vector2{200.0f,200.0f};
     draw_point(static_cast<int>(vec_rotate._x),static_cast<int>(vec_rotate._y), Color{1.0f,0.0f,0.0f,1.0f});
 
-    if(radius > PI*2.0f) {
-        grow = false;
-    } else if(radius < 0.0f) {
-        grow = true;
-    }
+    radius += 0.1f;
+    if(radius > PI*2.0f)
+        radius = 0.0f;
 
-    if(grow) {
-        radius += 0.1f;
-    } else {
-        radius -= 0.1f;
-    }
+    // if(radius > PI*2.0f) {
+    //     grow = false;
+    // } else if(radius < 0.0f) {
+    //     grow = true;
+    // }
+    //
+    // if(grow) {
+    //     radius += 0.1f;
+    // } else {
+    //     radius -= 0.1f;
+    // }
+
+    draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
 
     _painter = nullptr;
 }

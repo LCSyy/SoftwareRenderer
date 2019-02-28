@@ -64,7 +64,7 @@ public:
     inline Vector2 operator/(float scalar) const;
     inline Vector2 &operator/=(float scalar);
 
-    inline float dot(const Vector2 &rhs) const;
+    inline float dotProduct(const Vector2 &rhs) const;
     inline Vector2 scale(float factor) const;
     inline Vector2 rotate(float radius) const;
     inline Vector2 unit() const;
@@ -174,7 +174,7 @@ inline Vector2 &Vector2::operator/=(float scalar)
     return *this;
 }
 
-inline float Vector2::dot(const Vector2 &rhs) const
+inline float Vector2::dotProduct(const Vector2 &rhs) const
 {
     return _x * rhs._x + _y + rhs._y;
 }
