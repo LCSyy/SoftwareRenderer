@@ -1,5 +1,6 @@
 ﻿#include "rasterizeengine.h"
 #include <cmath>
+#include <iostream>
 
 RasterizeEngine::RasterizeEngine()
 {
@@ -51,83 +52,38 @@ void RasterizeEngine::draw_line_bresenham(const Point2D &start, const Point2D &e
     int sy = static_cast<int>(start.y);
     int ex = static_cast<int>(end.x);
     int ey = static_cast<int>(end.y);
-
     int dx = ex - sx;
     int dy = ey - sy;
-
-    int stride;
+    int x = sx;
+    int y = sy;
     int step_x = 0;
     int step_y = 0;
 
-    if(dx>0) step_x = 1;
-    else if(dx<0) step_x = -1;
-    if(dy>0) step_y = 1;
-    else if(dy<0) step_y = -1;
+    if(dx > 0)
+        step_x = 1;
+    else if(dx < 0)
+        step_x = -1;
+
+    if(dy > 0)
+        step_y = 1;
+    else if(dy < 0)
+        step_y = -1;
+
+    // 0 < |k| < 1
+    int p = -dx;
+    int lower_step = 2 * dy * step_x;
+    int upper_step = 2 * (dy * step_x - dx * step_y);
 
     if(std::abs(dy) < std::abs(dx)) {
-        stride = dx;
-        for(; sx != ex; sx += step_x) {
-
-        }
-    } else {
-        stride = dy;
-
-        for(; sy != ey; sy += step_y) {
-
+        for(int i = 0; i != dx; i += step_x, x += step_x) {
+            if(p < 0) {
+                draw_point(x,y,color);
+                p += lower_step;
+            } else if(p >= 0) {
+                draw_point(x,y,color);
+                y += step_y;
+                p += upper_step;
+            }
         }
     }
-
-    /*
-
-    auto plotLow = [this, &dx,&dy, &color](int x0, int y0, int x1){
-        int yi = 1;
-        if(dy<0) {
-            yi = -1;
-            dy = -dy;
-        }
-        int D = 2 * dy - dx;
-        int y_ = y0;
-
-        for(int x_ = x0; x_ < x1; ++x_) {
-            draw_point(x_,y_,color);
-            if(D > 0) {
-                y_ += yi;
-                D = D - 2 * dx;
-            }
-            D = D + 2 * dy;
-        }
-    };
-
-    auto plotHigh = [this,&dx,&dy, &color](int x0, int y0, int y1){
-        int xi = 1;
-        if(dx < 0) {
-            xi = -1;
-            dx = -dx;
-        }
-        int D = 2 * dx - dy;
-        int x_ = x0;
-        for(int y_ = y0; y_ < y1; ++y_) {
-            draw_point(x_,y_,color);
-            if(D > 0) {
-                x_ += xi;
-                D = D - 2 * dy;
-            }
-            D = D + 2 * dx;
-        }
-    };
-
-    if(std::abs(dy) <= std::abs(dx)) {
-        if(dx<=0) {
-            plotLow(ex,ey,sx);
-        } else {
-            plotLow(sx,sy,ex);
-        }
-    } else {
-        if(dy<=0) {
-            plotHigh(ex,ey,sy);
-        } else {
-            plotHigh(sx,sy,ey);
-        }
-    }
-    */
 }

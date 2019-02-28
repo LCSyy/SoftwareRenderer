@@ -15,7 +15,7 @@ RasterWindow::RasterWindow(QWindow *parent)
 {
      QTimer *timer = new QTimer(this);
      connect(timer,SIGNAL(timeout()),this,SLOT(renderNow()));
-     // timer->start(16);
+     timer->start(100);
 }
 
 RasterWindow::~RasterWindow()
@@ -33,7 +33,7 @@ void RasterWindow::render(QPainter *painter)
 
     Vector2 vec_rotate = vec.rotate(radius);
     vec_rotate += Vector2{200.0f,200.0f};
-    draw_point(static_cast<int>(vec_rotate._x),static_cast<int>(vec_rotate._y), Color{1.0f,0.0f,0.0f,1.0f});
+    // draw_point(static_cast<int>(vec_rotate._x),static_cast<int>(vec_rotate._y), Color{1.0f,0.0f,0.0f,1.0f});
 
     radius += 0.1f;
     if(radius > PI*2.0f)
@@ -51,8 +51,8 @@ void RasterWindow::render(QPainter *painter)
     //     radius -= 0.1f;
     // }
 
-    draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
-
+    draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{0.0f,0.0f,1.0f,1.0f});
+    draw_line_bresenham(Point2D{vec_rotate._x,vec_rotate._y},Point2D{400.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
     _painter = nullptr;
 }
 
