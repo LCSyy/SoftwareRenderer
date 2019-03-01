@@ -15,7 +15,7 @@ RasterWindow::RasterWindow(QWindow *parent)
 {
      QTimer *timer = new QTimer(this);
      connect(timer,SIGNAL(timeout()),this,SLOT(renderNow()));
-     timer->start(100);
+     timer->start(16);
 }
 
 RasterWindow::~RasterWindow()
@@ -51,8 +51,8 @@ void RasterWindow::render(QPainter *painter)
     //     radius -= 0.1f;
     // }
 
-    draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{0.0f,0.0f,1.0f,1.0f});
-    draw_line_bresenham(Point2D{vec_rotate._x,vec_rotate._y},Point2D{400.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
+    draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{400.0f,200.0f},Color{0.0f,0.0f,1.0f,1.0f});
+    draw_line_bresenham(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
     _painter = nullptr;
 }
 

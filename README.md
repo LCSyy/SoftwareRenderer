@@ -64,7 +64,68 @@ DDA算法将直线的方程中存在的乘法运算转换为了加法运算，�
 
 Bresenham算法的基本思想是：直线上的点绘制到栅格中时，对于x或者y值而言都有两个可选的像素位置。通过比较可选像素离理论点的距离来决定绘制到那个像素。
 
-。。。
+y = k * x + b
+
+(x0,y0) (x1,y1)
+
+0 < |k| < 1:
+
+y(i) = k * x(i) + b
+y_lower(i) = y_draw(i-1)
+y_upper(i) = y_draw(i-1) + step_y
+
+d(i) = y_upper(i) - y(i) - y(i) + y_lower(i)
+= y_draw(i-1) + y_draw(i-1) + step_y  - 2 * (k * x(i) + b)
+= 2 * y_draw(i-1) + step_y - 2 * k * x(i) - 2 * b
+= 2 * y_draw(i-1) + step_y - 2 * k * (x0 + i * step_x) - 2 * b
+= 2 * y_draw(i-1) + step_y - 2 * k * x0 - 2 * k * i * step_x - 2 * b
+= 2 * y_draw(i-1) - 2 * k * i * step_x + step_y - 2 * k * x0 - 2 * b
+
+p(i) = dx * d(i)
+= 2 * y_draw(i-1) * dx - 2 * k * i * step_x * dx + step_y * dx - 2 * k * x0 * dx - 2 * b * dx
+= 2 * y_draw(i-1) * dx - 2 * dy * i * step_x + step_y * dx - 2 * dy * x0 - 2 * b * dx
+= 2 * y_draw(i-1) * dx - 2 * dy * i * step_x + step_y * dx - 2 * dy * x0 - 2 * (y0 - dy/dx * x0) * dx
+= 2 * y_draw(i-1) * dx - 2 * dy * i * step_x + step_y * dx - 2 * dy * x0 - 2 * y0 * dx + 2 * dy * x0
+= 2 * y_draw(i-1) * dx - 2 * dy * i * step_x + step_y * dx - 2 * y0 * dx
+= 2 * y_draw(i-1) * dx - 2 * dy * i * step_x + C
+
+C = step_y * dx - 2 * y0 * dx
+p(0) = 2 * y0 * dx + C
+     = step_y * dx
+
+p(i+1) = p(i) + 2 * [y_draw(i) - y_draw(i-1)] * dx - 2 * dy * step_x
+
+以上公式是根据x的递增推导计算的，满足 0 < |k| < 1的情况，且公式p(i)中乘了包含dx,dy，其正负未知，需分情况分别处理：
+
+
+1 < |k|:
+
+x(i) = [y(i) - b] / k
+x_lower(i) = x_draw(i-1)
+x_upper(i) = x_draw(i-1) + step_x
+
+d(i) = x_upper(i) - x(i) - x(i) + x_lower(i)
+= 2 * x_draw(i-1) + step_x - 2 * x(i)
+= 2 * x_draw(i-1) + step_x - 2 * [(y(i) - b) / k]
+= 2 * x_draw(i-1) + step_x - 2 * [y0 + i * step_y - b / k]
+= 2 * x_draw(i-1) + step_x - 2 * y0/k - 2 * i * step_y/k + 2 * b / k
+
+p(i) = dy * d(i)
+= 2 * x_draw(i-1) * dy + step_x * dy - 2 * y0 * dx - 2 * i * step_y * dx + 2 * b * dx
+= 2 * x_draw(i-1) * dy - 2 * i * step_y * dx + step_x * dy - 2 * y0 * dx + 2 * b * dx
+= 2 * x_draw(i-1) * dy - 2 * i * step_y * dx + step_x * dy - 2 * y0 * dx + 2 * (y0 - dy/dx * x0) * dx
+= 2 * x_draw(i-1) * dy - 2 * i * step_y * dx + step_x * dy - 2 * y0 * dx + 2 * y0 * dx - 2 * dy * x0
+= 2 * x_draw(i-1) * dy - 2 * i * step_y * dx + step_x * dy - 2 * dy * x0
+= 2 * x_draw(i-1) * dy - 2 * i * step_y * dx + C
+
+C = step_x * dy - 2 * dy * x0
+p(0) = 2 * x0 * dy + C
+     = step_x * dy
+
+p(i+1) = p(i) + 2 * [x_draw(i) - x_draw(i-1)] * dy - 2 * dx * step_y
+
+以上公式是根据y的递增推导计算的，满足1< |k|的情况，且公式p(i)中乘了包含dx,dy，其正负未知，需分情况分别处理：
+
 
 ### References
 
