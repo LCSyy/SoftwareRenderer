@@ -15,6 +15,8 @@ public:
 
     void draw_point(int x, int y, const Color &color) override;
 
+    void draw_rect(QRect rect);
+
 private:
     QPainter *_painter{nullptr};
 };

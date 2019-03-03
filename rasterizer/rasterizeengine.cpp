@@ -123,7 +123,7 @@ void RasterizeEngine::draw_line_bresenham(const Point2D &start, const Point2D &e
                     p += upper_step;
                 }
             }
-        }else if((dx>0 && dy>0) || (dx<0 && dy<0)) {
+        } else if((dx>0 && dy>0) || (dx<0 && dy<0)) {
             for(int i = 0; i != dy; i += step_y, y += step_y) {
                 if(p<=0) {
                     draw_point(x,y,color);

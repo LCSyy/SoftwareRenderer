@@ -1,8 +1,12 @@
+[TOC]
+
 # Software Renderer
 
-## 直线扫描转换算法
+## 光栅图形学
 
-### DDA算法（数字微分法）
+### 直线扫描转换算法
+
+#### DDA算法（数字微分法）
 在绘制直线时，给定直线上两点P0(x0,y0)，P1(x1,y1)，以及根据直线微分方程 `y=kx+b`，通过x值的变化来计算对应y值，或者反过来根据y值的变化计算x值。以前一种方式为例：
 
 起始点的x<sub>i</sub> = x0, 则下一点的x值为： x<sub>i+1</sub> = x0 + stepX。 则可得 y<sub>i+1</sub> = y<sub>i</sub> + k * stepX。
@@ -58,7 +62,7 @@ draw_line(p0,p1) {
 **总结**
 DDA算法将直线的方程中存在的乘法运算转换为了加法运算，提高了运算效率。
 
-### Bresenham算法
+#### Bresenham算法
 
 主要参考[wikipedia - Bresenham's line algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 
@@ -95,7 +99,7 @@ p(0) = 2 * y0 * dx + C
 
 p(i+1) = p(i) + 2 * [y_draw(i) - y_draw(i-1)] * dx - 2 * dy * step_x
 
-以上公式是根据x的递增推导计算的，满足 0 < |k| < 1的情况，且公式p(i)中乘了包含dx,dy，其正负未知，需分情况分别处理：
+以上公式是根据x的递增推导计算的，满足 0 < |k| < 1的情况，且公式p(i)中乘了包含dx,dy，其正负未知，需分情况分别处理。
 
 
 1 < |k|:
@@ -124,12 +128,40 @@ p(0) = 2 * x0 * dy + C
 
 p(i+1) = p(i) + 2 * [x_draw(i) - x_draw(i-1)] * dy - 2 * dx * step_y
 
-以上公式是根据y的递增推导计算的，满足1< |k|的情况，且公式p(i)中乘了包含dx,dy，其正负未知，需分情况分别处理：
+以上公式是根据y的递增推导计算的，满足1< |k|的情况，且公式p(i)中乘了包含dx,dy，其正负未知，需分情况分别处理。
 
 
-### References
+#### References
 
 [wikipedia - DDA algorithm](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm))
 [wikipedia - Bresnhams line algorithm](https://en.wikipedia.org/wiki/Bresenham's_line_algorithm)
 [tutorialspoint - Computer Graphics Tutorial](https://www.tutorialspoint.com/computer_graphics/index.htm)
 [The Bresnham Line-Drawing Algorithm](https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html)
+
+## 线性代数基础
+### 向量
+
+### 矩阵
+
+### 点、向量与矩阵
+点，在坐标中表示一个位置，  实际上除此之外它不具备其他任何附加的属性，因此它除了包含坐标分量意外，没有定义其他操作。而何时要将点的值用于何目的，完全取决于实际使用情景。甚至可以用它来存放完全和位置没有关系的数据。
+
+向量，则遵循其数学定义，是既有大小又有方向的量。可使用有向线段来表示。向量是元素只有一行或者一列的矩阵，它们分别称为行矩阵和列矩阵。其具有大小和方向的属性，还定义了向量的数乘、加减、数量积、向量积等操作。
+
+矩阵，...
+
+## 二维变换
+
+二维变换主要包括平移、旋转和缩放，它们一般被称为几何变换或者建模变换。
+
+首先考虑在二维坐标中，点P(x,y)的几何变换。
+
+### 平移
+
+假设点P平移后为Pt(xt,yt)。如果将坐标位置使用向量表示，其向量的关系为Pt = P + Pd，其中Pd(xd,yd)就是点P的平移量，称之为平移向量或者位移向量。由此可得：
+
+```
+xt = x + xd;
+yt = y + yd;
+```
+
