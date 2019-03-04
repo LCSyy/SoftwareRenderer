@@ -27,6 +27,20 @@ void RasterWindow::render(QPainter *painter)
 {
     _painter = painter;
 
+    // static auto last_time = std::chrono::system_clock::now();
+    // auto frame_now = std::chrono::system_clock::now();
+    // std::chrono::duration<float,std::ratio<1,1>> diff = frame_now-last_time;
+
+    _update(0.0f);
+
+    // last_time = frame_now;
+    _painter = nullptr;
+}
+
+void RasterWindow::_update(float delta)
+{
+    Q_UNUSED(delta)
+
     static float radius = 0.0f;
     static Vector2 vec(100.0f,0.0f);
 
@@ -40,25 +54,14 @@ void RasterWindow::render(QPainter *painter)
     draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{400.0f,200.0f},Color{0.0f,0.0f,1.0f,1.0f});
     draw_line_bresenham(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
 
-    /*
-     * Rect rect;
-     * rect.setPos(100,100); // parent coordinate
-     * rect.rotate(90); // local coordinate
-     * rect.scale(0.5); //
-    */
-
     draw_rect(QRect(300,300,100,100));
-
-    _painter = nullptr;
 }
 
 void RasterWindow::draw_point(int x, int y, const Color &color)
 {
     if(_painter) {
-        _painter->setPen(QColor::fromRgbF(static_cast<double>(color.r),
-                                          static_cast<double>(color.g),
-                                          static_cast<double>(color.b),
-                                          static_cast<double>(color.a)));
+        _painter->setPen(QColor::fromRgbF(static_cast<double>(color.r), static_cast<double>(color.g),
+                                          static_cast<double>(color.b), static_cast<double>(color.a)));
         _painter->drawPoint(x,y);
     }
 }

@@ -1,4 +1,4 @@
-#ifndef BASERASTERWINDOW_H
+﻿#ifndef BASERASTERWINDOW_H
 #define BASERASTERWINDOW_H
 
 #include <QWindow>

@@ -17,6 +17,9 @@ public:
 
     void draw_rect(QRect rect);
 
+protected:
+    void _update(float delta);
+
 private:
     QPainter *_painter{nullptr};
 };
