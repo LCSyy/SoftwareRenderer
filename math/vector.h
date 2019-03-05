@@ -40,6 +40,20 @@
 
 */
 
+struct Point2D
+{
+    float x;
+    float y;
+};
+
+struct Color
+{
+    float r;
+    float g;
+    float b;
+    float a;
+};
+
 const float PI = 3.1415926f;
 
 struct Vector2
@@ -79,7 +93,6 @@ public:
     float _x;
     float _y;
 };
-
 
 inline Vector2 &Vector2::operator=(const Vector2 &rhs)
 {

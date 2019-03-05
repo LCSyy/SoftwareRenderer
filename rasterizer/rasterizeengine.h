@@ -1,19 +1,7 @@
 ﻿#ifndef RASTERIZEENGINE_H
 #define RASTERIZEENGINE_H
 
-struct Point2D
-{
-    float x;
-    float y;
-};
-
-struct Color
-{
-    float r;
-    float g;
-    float b;
-    float a;
-};
+#include "math/vector.h"
 
 class RasterizeEngine
 {

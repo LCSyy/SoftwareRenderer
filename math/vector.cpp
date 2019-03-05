@@ -1,4 +1,4 @@
-﻿#include "vector2.h"
+﻿#include "./vector.h"
 
 Vector2::Vector2()
     : _x(0.0f)

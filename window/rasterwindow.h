@@ -4,6 +4,8 @@
 #include "baserasterwindow.h"
 #include "rasterizer/rasterizeengine.h"
 
+class SceneNode;
+class Animation;
 class RasterWindow: public BaseRasterWindow, public RasterizeEngine
 {
     Q_OBJECT
@@ -22,6 +24,9 @@ protected:
 
 private:
     QPainter *_painter{nullptr};
+
+    SceneNode *scene{nullptr};
+    std::vector<Animation*> anims{nullptr};
 };
 
 #endif // RASTERWINDOW_H

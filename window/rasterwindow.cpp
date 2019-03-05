@@ -8,7 +8,9 @@
 
 #include <QDebug>
 
-#include "math/vector2.h"
+#include "math/vector.h"
+#include "scene/scenenode.h"
+#include "scene/animation.h"
 
 RasterWindow::RasterWindow(QWindow *parent)
     : BaseRasterWindow(parent)
@@ -20,6 +22,11 @@ RasterWindow::RasterWindow(QWindow *parent)
 
 RasterWindow::~RasterWindow()
 {
+    for(Animation *anim: anims) {
+        if(anim) delete anim;
+    }
+    if(scene)
+        delete scene;
 
 }
 
@@ -41,20 +48,25 @@ void RasterWindow::_update(float delta)
 {
     Q_UNUSED(delta)
 
-    static float radius = 0.0f;
-    static Vector2 vec(100.0f,0.0f);
+    if(!scene) {
+        scene = new SceneNode({Point2D{0,0},Point2D{100,0},Point2D{100,100},Point2D{0,100}},nullptr);
 
-    Vector2 vec_rotate = vec.rotate(radius);
-    vec_rotate += Vector2{200.0f,200.0f};
+        Animation *x_anim = new Animation;
+        anims.push_back(x_anim);
+        x_anim->attachPropertyAnimation(&scene->transform().mTranslation._x,0.0f,600.0f,1.0f);
+    }
 
-    radius += 0.1f;
-    if(radius > PI*2.0f)
-        radius = 0.0f;
+    for(size_t i = 0, i2 = 1; i < scene->data().size(); ++i, i2 = i + 1) {
+        if(i == scene->data().size() - 1) {
+            i2 = 0;
+        }
+        draw_line_bresenham(scene->transformedData(i),scene->transformedData(i2),Color{1.0f,0.0f,0.0f,1.0f});
+    }
 
-    draw_line_dda(Point2D{vec_rotate._x,vec_rotate._y},Point2D{400.0f,200.0f},Color{0.0f,0.0f,1.0f,1.0f});
-    draw_line_bresenham(Point2D{vec_rotate._x,vec_rotate._y},Point2D{200.0f,200.0f},Color{1.0f,0.0f,0.0f,1.0f});
-
-    draw_rect(QRect(300,300,100,100));
+    for(Animation *anim: anims) {
+        if(anim)
+            anim->play();
+    }
 }
 
 void RasterWindow::draw_point(int x, int y, const Color &color)
