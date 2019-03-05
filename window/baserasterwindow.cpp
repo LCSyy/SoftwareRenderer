@@ -1,4 +1,5 @@
 ﻿#include "baserasterwindow.h"
+#include <QGuiApplication>
 #include <QPainter>
 #include <QResizeEvent>
 #include <QBackingStore>
@@ -8,16 +9,31 @@ BaseRasterWindow::BaseRasterWindow(QWindow *parent)
     , mBackingStore(new QBackingStore(this))
 {
     setGeometry(100,100,800,800);
+    connect(qGuiApp,&QGuiApplication::aboutToQuit,[this](){
+        _final();
+    });
 }
 
 BaseRasterWindow::~BaseRasterWindow()
 {
-
 }
 
 void BaseRasterWindow::render(QPainter *painter)
 {
-    painter->drawPoint(QPointF(10,10));
+    _painter = painter;
+
+     if(!mInitailized) {
+         mInitailized = true;
+         _init();
+     }
+
+     // static auto last_time = std::chrono::system_clock::now();
+     // auto frame_now = std::chrono::system_clock::now();
+     // std::chrono::duration<float,std::ratio<1,1>> diff = frame_now-last_time;
+     _update(0.0f);
+     // last_time = frame_now;
+
+     _painter = nullptr;
 }
 
 void BaseRasterWindow::renderLater()
@@ -41,6 +57,21 @@ void BaseRasterWindow::renderNow()
     painter.end();
     mBackingStore->endPaint();
     mBackingStore->flush(rect);
+}
+
+void BaseRasterWindow::_init()
+{
+
+}
+
+void BaseRasterWindow::_update(float delta)
+{
+
+}
+
+void BaseRasterWindow::_final()
+{
+
 }
 
 bool BaseRasterWindow::event(QEvent *e)

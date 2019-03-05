@@ -19,10 +19,18 @@ public slots:
     void renderNow();
 
 protected:
-    bool event(QEvent *e) override;
+    virtual void _init();
+    virtual void _update(float delta);
+    virtual void _final();
 
+    bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *e) override;
     void exposeEvent(QExposeEvent *e) override;
+
+protected:
+    QPainter *_painter{nullptr};
+    bool mInitailized{false};
+    bool mFinalized{false};
 
 private:
     QBackingStore *mBackingStore{nullptr};

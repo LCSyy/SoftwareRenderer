@@ -6,7 +6,7 @@ class Animation
 public:
     Animation() {}
 
-    void attachPropertyAnimation(float *property, float start, float end, float step) {
+    void attachProperty(float *property, float start, float end, float step) {
         if(!property) return;
         _property = property;
         _start = start;
