@@ -70,3 +70,5 @@ void RasterWindow::_final()
     if(scene)
         delete scene;
 }
+
+// https://blog.csdn.net/smilejiasmile/article/details/79606234
