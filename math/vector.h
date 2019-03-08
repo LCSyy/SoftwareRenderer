@@ -58,7 +58,6 @@ const float PI = 3.1415926f;
 
 struct Vector2
 {
-public:
     Vector2();
     Vector2(float x, float y);
     Vector2(const Vector2 &rhs);
@@ -89,7 +88,7 @@ public:
 
     inline static Vector2 zero();
     inline static Vector2 one();
-public:
+
     float _x;
     float _y;
 };
